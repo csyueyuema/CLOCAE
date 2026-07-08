@@ -1,8 +1,5 @@
 # CrashLocCAE Artifact
 
-Anonymous artifact repository for a crash fault-localization study on CAE and
-scientific-computing software.
-
 This repository contains the source code required to rebuild datasets, train and
 evaluate the rankers, run comparison baselines, and regenerate the paper tables
 and figures. The data, trained models, predictions, and generated results are
