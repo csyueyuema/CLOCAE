@@ -1,0 +1,580 @@
+{
+    "modules": {
+        "M1_CORE": "Core / Common",
+        "M2_MESH": "Mesh / Geometry",
+        "M3_FEM": "FEM / Discretization / Assembly",
+        "M4_NUMERICAL": "Numerical / Linear Algebra",
+        "M5_SOLVER": "Solver / Time Integration / Nonlinear",
+        "M6_PARALLEL": "Parallel / Communication",
+        "M7_EXTERNAL": "External / Third-party"
+    },
+    "weights": {
+        "path": 0.35,
+        "name": 0.35,
+        "dep": 0.20,
+        "api": 0.10
+    },
+    "tau": 0.15,
+    "fallback_module": "M1_CORE",
+    "extensions": [
+        ".f90",
+        ".F90",
+        ".f",
+        ".for",
+        ".f95",
+        ".c",
+        ".cc",
+        ".cpp",
+        ".cxx",
+        ".h",
+        ".hpp",
+        ".hh",
+        ".py"
+    ],
+    "path_hints": {
+        "core": {
+            "M1_CORE": 1.0
+        },
+        "common": {
+            "M1_CORE": 1.0
+        },
+        "base": {
+            "M1_CORE": 0.8
+        },
+        "util": {
+            "M1_CORE": 0.8
+        },
+        "utils": {
+            "M1_CORE": 0.8
+        },
+        "io": {
+            "M1_CORE": 0.8
+        },
+        "input": {
+            "M1_CORE": 0.8
+        },
+        "output": {
+            "M1_CORE": 0.8
+        },
+        "config": {
+            "M1_CORE": 1.0
+        },
+        "parser": {
+            "M1_CORE": 1.0
+        },
+        "logging": {
+            "M1_CORE": 0.9
+        },
+        "logger": {
+            "M1_CORE": 0.9
+        },
+        "mesh": {
+            "M2_MESH": 1.0
+        },
+        "geom": {
+            "M2_MESH": 1.0
+        },
+        "geometry": {
+            "M2_MESH": 1.0
+        },
+        "grid": {
+            "M2_MESH": 0.9
+        },
+        "topo": {
+            "M2_MESH": 0.8
+        },
+        "fem": {
+            "M3_FEM": 1.0
+        },
+        "fe": {
+            "M3_FEM": 0.8
+        },
+        "element": {
+            "M3_FEM": 0.7
+        },
+        "assembly": {
+            "M3_FEM": 1.0
+        },
+        "discret": {
+            "M3_FEM": 0.9
+        },
+        "dof": {
+            "M3_FEM": 1.0
+        },
+        "quadrature": {
+            "M3_FEM": 0.9
+        },
+        "linalg": {
+            "M4_NUMERICAL": 1.0
+        },
+        "algebra": {
+            "M4_NUMERICAL": 1.0
+        },
+        "krylov": {
+            "M4_NUMERICAL": 1.0
+        },
+        "amg": {
+            "M4_NUMERICAL": 1.0
+        },
+        "precond": {
+            "M4_NUMERICAL": 0.9
+        },
+        "solverlib": {
+            "M4_NUMERICAL": 0.8
+        },
+        "solver": {
+            "M5_SOLVER": 1.0
+        },
+        "timeste": {
+            "M5_SOLVER": 0.9
+        },
+        "time": {
+            "M5_SOLVER": 0.6
+        },
+        "newton": {
+            "M5_SOLVER": 1.0
+        },
+        "nonlinear": {
+            "M5_SOLVER": 1.0
+        },
+        "integrat": {
+            "M5_SOLVER": 0.9
+        },
+        "mpi": {
+            "M6_PARALLEL": 1.0
+        },
+        "parallel": {
+            "M6_PARALLEL": 1.0
+        },
+        "openmp": {
+            "M6_PARALLEL": 0.9
+        },
+        "thread": {
+            "M6_PARALLEL": 0.8
+        },
+        "comm": {
+            "M6_PARALLEL": 0.8
+        },
+        "halo": {
+            "M6_PARALLEL": 0.8
+        },
+        "ghost": {
+            "M6_PARALLEL": 0.8
+        },
+        "partition": {
+            "M6_PARALLEL": 0.8
+        },
+        "third": {
+            "M7_EXTERNAL": 1.0
+        },
+        "thirdparty": {
+            "M7_EXTERNAL": 1.0
+        },
+        "third_party": {
+            "M7_EXTERNAL": 1.0
+        },
+        "external": {
+            "M7_EXTERNAL": 1.0
+        },
+        "vendor": {
+            "M7_EXTERNAL": 0.9
+        },
+        "contrib": {
+            "M7_EXTERNAL": 0.9
+        },
+        "deps": {
+            "M7_EXTERNAL": 0.7
+        }
+    },
+    "name_lexicon": {
+        "main": {
+            "M1_CORE": 0.6
+        },
+        "driver": {
+            "M1_CORE": 0.8
+        },
+        "core": {
+            "M1_CORE": 1.0
+        },
+        "common": {
+            "M1_CORE": 1.0
+        },
+        "util": {
+            "M1_CORE": 0.8
+        },
+        "utils": {
+            "M1_CORE": 0.8
+        },
+        "config": {
+            "M1_CORE": 1.0
+        },
+        "option": {
+            "M1_CORE": 0.9
+        },
+        "parse": {
+            "M1_CORE": 1.0
+        },
+        "parser": {
+            "M1_CORE": 1.0
+        },
+        "log": {
+            "M1_CORE": 0.8
+        },
+        "logger": {
+            "M1_CORE": 0.9
+        },
+        "error": {
+            "M1_CORE": 0.8
+        },
+        "exception": {
+            "M1_CORE": 0.8
+        },
+        "io": {
+            "M1_CORE": 0.8
+        },
+        "input": {
+            "M1_CORE": 0.8
+        },
+        "output": {
+            "M1_CORE": 0.8
+        },
+        "read": {
+            "M1_CORE": 0.8
+        },
+        "write": {
+            "M1_CORE": 0.8
+        },
+        "vtk": {
+            "M1_CORE": 0.7
+        },
+        "hdf5": {
+            "M1_CORE": 0.7
+        },
+        "mesh": {
+            "M2_MESH": 1.0
+        },
+        "geom": {
+            "M2_MESH": 1.0
+        },
+        "geometry": {
+            "M2_MESH": 1.0
+        },
+        "grid": {
+            "M2_MESH": 0.9
+        },
+        "topo": {
+            "M2_MESH": 0.8
+        },
+        "connectivity": {
+            "M2_MESH": 0.8
+        },
+        "patch": {
+            "M2_MESH": 0.8
+        },
+        "region": {
+            "M2_MESH": 0.7
+        },
+        "fem": {
+            "M3_FEM": 1.0
+        },
+        "element": {
+            "M3_FEM": 0.8
+        },
+        "assembly": {
+            "M3_FEM": 1.0
+        },
+        "discret": {
+            "M3_FEM": 0.9
+        },
+        "dof": {
+            "M3_FEM": 1.0
+        },
+        "shape": {
+            "M3_FEM": 0.8
+        },
+        "quadrature": {
+            "M3_FEM": 0.9
+        },
+        "constraint": {
+            "M3_FEM": 0.9
+        },
+        "dirichlet": {
+            "M3_FEM": 0.9
+        },
+        "neumann": {
+            "M3_FEM": 0.9
+        },
+        "robin": {
+            "M3_FEM": 0.9
+        },
+        "linalg": {
+            "M4_NUMERICAL": 1.0
+        },
+        "algebra": {
+            "M4_NUMERICAL": 1.0
+        },
+        "krylov": {
+            "M4_NUMERICAL": 1.0
+        },
+        "gmres": {
+            "M4_NUMERICAL": 0.9
+        },
+        "cg": {
+            "M4_NUMERICAL": 0.8
+        },
+        "bicg": {
+            "M4_NUMERICAL": 0.8
+        },
+        "amg": {
+            "M4_NUMERICAL": 0.9
+        },
+        "ilu": {
+            "M4_NUMERICAL": 0.9
+        },
+        "lu": {
+            "M4_NUMERICAL": 0.8
+        },
+        "cholesky": {
+            "M4_NUMERICAL": 0.8
+        },
+        "precond": {
+            "M4_NUMERICAL": 0.9
+        },
+        "matrix": {
+            "M4_NUMERICAL": 0.7
+        },
+        "solver": {
+            "M5_SOLVER": 1.0
+        },
+        "time": {
+            "M5_SOLVER": 0.7
+        },
+        "timestep": {
+            "M5_SOLVER": 0.9
+        },
+        "integrat": {
+            "M5_SOLVER": 0.9
+        },
+        "newton": {
+            "M5_SOLVER": 1.0
+        },
+        "nonlinear": {
+            "M5_SOLVER": 1.0
+        },
+        "linesearch": {
+            "M5_SOLVER": 0.9
+        },
+        "residual": {
+            "M5_SOLVER": 0.7
+        },
+        "converge": {
+            "M5_SOLVER": 0.8
+        },
+        "mpi": {
+            "M6_PARALLEL": 1.0
+        },
+        "parallel": {
+            "M6_PARALLEL": 1.0
+        },
+        "openmp": {
+            "M6_PARALLEL": 0.9
+        },
+        "thread": {
+            "M6_PARALLEL": 0.8
+        },
+        "comm": {
+            "M6_PARALLEL": 0.8
+        },
+        "halo": {
+            "M6_PARALLEL": 0.8
+        },
+        "ghost": {
+            "M6_PARALLEL": 0.8
+        },
+        "partition": {
+            "M6_PARALLEL": 0.8
+        },
+        "third": {
+            "M7_EXTERNAL": 1.0
+        },
+        "external": {
+            "M7_EXTERNAL": 1.0
+        },
+        "vendor": {
+            "M7_EXTERNAL": 0.9
+        },
+        "contrib": {
+            "M7_EXTERNAL": 0.9
+        },
+        "petsc": {
+            "M7_EXTERNAL": 0.8
+        },
+        "trilinos": {
+            "M7_EXTERNAL": 0.8
+        },
+        "metis": {
+            "M7_EXTERNAL": 0.8
+        },
+        "parmetis": {
+            "M7_EXTERNAL": 0.8
+        }
+    },
+    "api_lexicon": {
+        "dlopen": {
+            "M1_CORE": 1.5
+        },
+        "symbol not found": {
+            "M1_CORE": 1.5
+        },
+        "assert": {
+            "M1_CORE": 1.0
+        },
+        "exception": {
+            "M1_CORE": 1.0
+        },
+        "cannot open": {
+            "M1_CORE": 1.5
+        },
+        "file not found": {
+            "M1_CORE": 1.5
+        },
+        "read": {
+            "M1_CORE": 0.6
+        },
+        "write": {
+            "M1_CORE": 0.6
+        },
+        "namelist": {
+            "M1_CORE": 0.8
+        },
+        "fopen": {
+            "M1_CORE": 0.8
+        },
+        "fclose": {
+            "M1_CORE": 0.8
+        },
+        "ifstream": {
+            "M1_CORE": 0.8
+        },
+        "ofstream": {
+            "M1_CORE": 0.8
+        },
+        "negative volume": {
+            "M2_MESH": 2.0
+        },
+        "skewness": {
+            "M2_MESH": 1.5
+        },
+        "aspect ratio": {
+            "M2_MESH": 1.5
+        },
+        "non-manifold": {
+            "M2_MESH": 2.0
+        },
+        "dof": {
+            "M3_FEM": 1.2
+        },
+        "quadrature": {
+            "M3_FEM": 1.2
+        },
+        "shape function": {
+            "M3_FEM": 1.2
+        },
+        "dirichlet": {
+            "M3_FEM": 1.2
+        },
+        "neumann": {
+            "M3_FEM": 1.2
+        },
+        "robin": {
+            "M3_FEM": 1.2
+        },
+        "assembly": {
+            "M3_FEM": 1.2
+        },
+        "singular": {
+            "M4_NUMERICAL": 1.5
+        },
+        "rank-deficient": {
+            "M4_NUMERICAL": 1.5
+        },
+        "factorization failed": {
+            "M4_NUMERICAL": 1.8
+        },
+        "pivot": {
+            "M4_NUMERICAL": 1.0
+        },
+        "cholesky": {
+            "M4_NUMERICAL": 1.0
+        },
+        "gmres": {
+            "M4_NUMERICAL": 1.0
+        },
+        "cg": {
+            "M4_NUMERICAL": 0.8
+        },
+        "amg": {
+            "M4_NUMERICAL": 1.0
+        },
+        "preconditioner": {
+            "M4_NUMERICAL": 1.0
+        },
+        "nan": {
+            "M4_NUMERICAL": 1.2
+        },
+        "inf": {
+            "M4_NUMERICAL": 1.2
+        },
+        "failed to converge": {
+            "M5_SOLVER": 1.5
+        },
+        "max iterations": {
+            "M5_SOLVER": 1.2
+        },
+        "time step too small": {
+            "M5_SOLVER": 1.5
+        },
+        "newton": {
+            "M5_SOLVER": 1.2
+        },
+        "line search": {
+            "M5_SOLVER": 1.2
+        },
+        "residual diverged": {
+            "M5_SOLVER": 1.5
+        },
+        "mpi_": {
+            "M6_PARALLEL": 1.5
+        },
+        "omp_": {
+            "M6_PARALLEL": 1.2
+        },
+        "allreduce": {
+            "M6_PARALLEL": 1.0
+        },
+        "isend": {
+            "M6_PARALLEL": 0.8
+        },
+        "irecv": {
+            "M6_PARALLEL": 0.8
+        },
+        "deadlock": {
+            "M6_PARALLEL": 1.8
+        },
+        "message truncated": {
+            "M6_PARALLEL": 1.8
+        },
+        "third_party": {
+            "M7_EXTERNAL": 1.5
+        },
+        "abi mismatch": {
+            "M7_EXTERNAL": 2.0
+        },
+        "petsc": {
+            "M7_EXTERNAL": 1.2
+        },
+        "trilinos": {
+            "M7_EXTERNAL": 1.2
+        }
+    }
+}

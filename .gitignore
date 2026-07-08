@@ -1,0 +1,28 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+
+# Local credentials and private API config.
+config/config.yaml
+ranker/config/llm_api.local.json
+.env
+
+# Companion Figshare data and local experiment outputs.
+raw_data/
+issue_corpus/
+labels/
+repos/
+ranker/data/
+ranker/results/
+ranker/outputs/
+ranker/cache/
+ranker/archive/
+distill/data/
+distill/outputs/
+
+# Logs and generated archives.
+logs/
+*.log
+*.tar
+*.tar.gz
+*.tar.zst

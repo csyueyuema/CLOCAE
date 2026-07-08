@@ -1,0 +1,319 @@
+{
+    "M1_CORE": {
+        "name": "Core / Common",
+        "role": [
+            "贯穿全流程的底座层，从程序启动到结果输出都可能涉及",
+            "不直接决定方程离散/稳定性，但决定读取输入、组织数据、调度模块、记录错误"
+        ],
+        "responsibility": [
+            "配置与参数系统：解析命令行/配置文件/字典；校验参数范围、类型、依赖关系；组装 run-time 配置对象",
+            "日志与异常系统：统一 error handler、assert/exception、堆栈打印、崩溃转储；将底层错误包装为用户可读信息",
+            "IO 与数据管线：案例文件读取、mesh/field 加载入口、结果输出（vtk/hdf5/自定义格式）；路径管理与环境变量",
+            "通用数据结构与内存管理：智能指针、引用计数、对象池、缓存；容器（hash/map）、序列化；跨模块对象共享",
+            "模块注册与调度：工厂模式、插件加载、动态库加载、生命周期（init -> run -> finalize）",
+            "跨模块胶水：把 mesh/fem/solver/numerical 串成流水线；统一接口（例如 solve() 调用链）"
+        ],
+        "symptoms": {
+            "strong_keywords": [
+                "parse",
+                "config",
+                "option",
+                "dictionary",
+                "parameter",
+                "invalid option",
+                "unknown keyword",
+                "type mismatch",
+                "out of range",
+                "cannot open",
+                "file not found",
+                "permission denied",
+                "path",
+                "directory",
+                "read error",
+                "write error",
+                "dlopen",
+                "symbol not found",
+                "ABI",
+                "version mismatch",
+                "double free",
+                "use after free",
+                "null pointer",
+                "bad_alloc",
+                "heap corruption",
+                "factory",
+                "registry",
+                "plugin",
+                "module init failed"
+            ],
+            "crash_shapes": [
+                "启动即崩",
+                "读入阶段崩",
+                "输出阶段崩",
+                "参数驱动型崩溃"
+            ],
+            "stack_patterns": [
+                "main",
+                "driver",
+                "parser",
+                "logger",
+                "exception handler",
+                "plugin loader"
+            ]
+        },
+        "rootcause_trigger": [
+            "错误配置/文件缺失 -> parser/assert -> 立即崩溃",
+            "错误参数 -> solver/numerical 后续发散；堆栈落在 solver 但根因在 Core 参数管理",
+            "对象生命周期错误 -> 任意模块调用时触发 segfault（堆栈可能落在 solver/numerical 造成误导）"
+        ],
+        "confusion": [
+            "与 External 混淆：dlopen/symbol/ABI/version mismatch 既可能是库问题，也可能是 loader/registry 问题",
+            "与 Solver 混淆：driver 调用链会同时出现 Core 与 Solver；出现 residual/jacobian/singular 更偏 solver/numerical"
+        ]
+    },
+    "M2_MESH": {
+        "name": "Mesh / Geometry",
+        "role": [
+            "位于离散之前的上游层，是 CAE 计算的空间骨架",
+            "网格层制造的问题常在求解阶段爆发（根因-堆栈脱节高发）"
+        ],
+        "responsibility": [
+            "几何构建与导入：CAD/几何文件解析；几何修复（缝合、去自交）",
+            "网格生成：体网格/面网格；局部加密；边界层网格；自适应 refine/coarsen",
+            "网格拓扑与邻接：单元-面-边-点邻接；区域/材料区块；边界标记与 patch",
+            "质量评估与修复：negative volume、inverted element、non-manifold、skewness/aspect ratio 等",
+            "网格数据结构：坐标、连接关系、分区信息（与并行耦合）"
+        ],
+        "symptoms": {
+            "strong_keywords": [
+                "mesh",
+                "grid",
+                "cell",
+                "element",
+                "face",
+                "vertex",
+                "topology",
+                "connectivity",
+                "boundary patch",
+                "region",
+                "non-manifold",
+                "negative volume",
+                "inverted element",
+                "degenerate",
+                "skewness",
+                "aspect ratio",
+                "quality",
+                "self-intersection",
+                "geometry",
+                "CAD",
+                "surface",
+                "curve",
+                "normal",
+                "orientation"
+            ],
+            "indirect_numeric_symptoms": [
+                "Jacobian determinant <= 0",
+                "singular",
+                "ill-conditioned",
+                "NaN after iterations",
+                "residual diverged quickly"
+            ]
+        },
+        "rootcause_trigger": [
+            "坏单元/负体积 -> 映射雅可比异常 -> 单元矩阵异常 -> Jacobian/Singular",
+            "极端网格质量 -> 条件数爆炸 -> 线性求解失败/残差不降",
+            "边界 patch 标记错误 -> BC 施加错位 -> 离散系统异常 -> 奇异/发散"
+        ],
+        "confusion": [
+            "与 FEM 混：Mesh 强调 topology/quality/patch；FEM 强调 dof/assembly/quadrature",
+            "与 Parallel 混：出现 halo/ghost/partition/MPI 更偏 Parallel；质量/negative volume 更偏 Mesh"
+        ]
+    },
+    "M3_FEM": {
+        "name": "FEM / Discretization / Assembly",
+        "role": [
+            "连接 Mesh 与 Numerical 的中间层",
+            "决定离散系统结构正确性：DoF、装配、BC、耦合项"
+        ],
+        "responsibility": [
+            "离散空间定义：元素类型、阶次、多场耦合",
+            "自由度管理：DoF 编号、约束、悬挂节点、子空间映射",
+            "数值积分与映射：高斯积分、雅可比映射、形函数导数",
+            "装配逻辑：局部矩阵/向量 -> 全局稀疏结构",
+            "边界条件施加：Dirichlet/Neumann/Robin；消元/罚项/乘子法；接触/约束"
+        ],
+        "symptoms": {
+            "strong_keywords": [
+                "dof",
+                "finite element",
+                "shape function",
+                "quadrature",
+                "mapping",
+                "assembly",
+                "stiffness",
+                "mass matrix",
+                "weak form",
+                "constraint",
+                "Dirichlet",
+                "Neumann",
+                "Robin",
+                "hanging node",
+                "constraint matrix",
+                "sparsity pattern"
+            ],
+            "crash_shapes": [
+                "装配阶段断言",
+                "索引越界",
+                "稀疏结构不匹配",
+                "BC 导致 rank-deficient"
+            ]
+        },
+        "rootcause_trigger": [
+            "BC 不充分/约束错误 -> 系统欠约束 -> 奇异矩阵",
+            "装配索引错误 -> 稀疏结构损坏 -> 求解时崩",
+            "映射/积分错误 -> Jacobian 误差 -> 残差发散"
+        ],
+        "confusion": [
+            "与 Numerical 混：FEM 多出现 dof/assembly/boundary；Numerical 多出现 LU/GMRES/AMG",
+            "与 Mesh 混：Mesh 多为质量/拓扑；FEM 多为形函数/装配"
+        ]
+    },
+    "M4_NUMERICAL": {
+        "name": "Numerical / Linear Algebra",
+        "role": [
+            "负责解线性系统、预条件、评估数值稳定性",
+            "症状最集中：可能是真凶，也可能是报警器"
+        ],
+        "responsibility": [
+            "线性求解器：CG/GMRES/BiCGStab、直接法 LU/Cholesky",
+            "预条件与多重网格：ILU/AMG",
+            "稀疏矩阵结构：CSR/CSC/Block",
+            "数值稳定机制：缩放、pivoting、NaN/Inf 检测"
+        ],
+        "symptoms": {
+            "strong_keywords": [
+                "singular",
+                "ill-conditioned",
+                "rank-deficient",
+                "pivot",
+                "factorization failed",
+                "Cholesky",
+                "LU",
+                "GMRES",
+                "CG",
+                "AMG",
+                "preconditioner",
+                "Krylov",
+                "PETSc",
+                "Trilinos",
+                "NaN",
+                "Inf",
+                "floating point exception"
+            ]
+        },
+        "rootcause_trigger": [
+            "自身：矩阵格式/维度/索引错误；预条件实现 bug；接口误用",
+            "上游：Mesh 坏 -> 病态；FEM/BC 错 -> rank-deficient"
+        ],
+        "confusion": [
+            "与 External：若 PETSc/Trilinos 属 third_party -> External；自研线代 -> Numerical",
+            "与 Solver：Solver 偏策略/步长/判据；Numerical 偏分解/迭代器名"
+        ]
+    },
+    "M5_SOLVER": {
+        "name": "Solver / Time Integration / Nonlinear",
+        "role": [
+            "负责迭代求解流程控制",
+            "堆栈偏置强：很多崩溃堆栈都落在 solver 调用链"
+        ],
+        "responsibility": [
+            "非线性求解：Newton/Picard、线搜索、阻尼",
+            "时间推进：显式/隐式、稳定性控制、步长自适应",
+            "收敛判据：残差范数、相对误差、最大步数",
+            "失败处理：回滚、重启、降阶",
+            "调用 FEM 装配与 Numerical 解线性系统"
+        ],
+        "symptoms": {
+            "strong_keywords": [
+                "residual diverged",
+                "failed to converge",
+                "max iterations",
+                "time step too small",
+                "Newton failed",
+                "line search failed"
+            ]
+        },
+        "rootcause_trigger": [
+            "多为触发者：上游错误被放大成 solver 失败",
+            "也可能自身根因：收敛判据/步长控制/线搜索实现错误"
+        ],
+        "confusion": [
+            "与 Numerical：Numerical 有 LU/GMRES/AMG；Solver 有策略/步长/判据",
+            "与 FEM：失败点若紧邻 Jacobian/装配调用可能是 FEM"
+        ]
+    },
+    "M6_PARALLEL": {
+        "name": "Parallel / Communication",
+        "role": [
+            "支撑分布式/共享内存并行",
+            "错误常对规模/分区敏感，具有非确定性"
+        ],
+        "responsibility": [
+            "MPI 通信：collective、point-to-point",
+            "halo/ghost 同步",
+            "分区/负载均衡",
+            "并行装配、并行求解接口"
+        ],
+        "symptoms": {
+            "strong_keywords": [
+                "MPI",
+                "rank",
+                "deadlock",
+                "hang",
+                "collective",
+                "buffer",
+                "message truncated",
+                "invalid rank",
+                "halo",
+                "ghost",
+                "partition"
+            ]
+        },
+        "rootcause_trigger": [
+            "同步/通信错误 -> 崩溃或 hang",
+            "数据结构不一致 -> 通信越界"
+        ],
+        "confusion": [
+            "与 Mesh：分区涉及网格但出现 MPI/halo/ghost 更偏 Parallel",
+            "与 External：MPI 实现是 External，但项目内部并行封装是 Parallel"
+        ]
+    },
+    "M7_EXTERNAL": {
+        "name": "External / Third-party",
+        "role": [
+            "非项目自研：第三方库、系统依赖",
+            "必须有该模块，否则堆栈落在库里时会误归因内部模块"
+        ],
+        "responsibility": [
+            "第三方线代库、网格库、CAD、IO、可视化等"
+        ],
+        "symptoms": {
+            "strong_keywords": [
+                "third_party",
+                "external",
+                "vendor",
+                "contrib",
+                "assertion failed in library",
+                "ABI mismatch",
+                "symbol not found"
+            ]
+        },
+        "rootcause_trigger": [
+            "库内部 bug 或接口误用",
+            "通常只能定位到调用点，很难到库内部语句级"
+        ],
+        "confusion": [
+            "与 Numerical：自研线代->Numerical；PETSc/Trilinos third_party->External",
+            "与 Core：动态加载失败看是 loader（Core）还是库版本（External）"
+        ]
+    }
+}

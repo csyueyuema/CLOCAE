@@ -1,0 +1,315 @@
+{
+    "modules": {
+        "M1": "Geometry & Mesh",
+        "M2": "Physics & Solver Core",
+        "M3": "Material & Property",
+        "M4": "Boundary & Initial Conditions",
+        "M5": "IO & Pre/Post Processing",
+        "M6": "Parallel & Infrastructure",
+        "M7": "Utility & Math"
+    },
+    "weights": {
+        "path": 0.35,
+        "name": 0.35,
+        "dep": 0.20,
+        "api": 0.10
+    },
+    "tau": 0.15,
+    "extensions": [
+        ".f90",
+        ".F90",
+        ".f",
+        ".for",
+        ".f95",
+        ".c",
+        ".cc",
+        ".cpp",
+        ".cxx",
+        ".h",
+        ".hpp",
+        ".hh",
+        ".py"
+    ],
+    "path_hints": {
+        "mesh": {
+            "M1": 1.0
+        },
+        "geom": {
+            "M1": 1.0
+        },
+        "geometry": {
+            "M1": 1.0
+        },
+        "grid": {
+            "M1": 0.8
+        },
+        "solver": {
+            "M2": 1.0
+        },
+        "physics": {
+            "M2": 0.9
+        },
+        "numerics": {
+            "M2": 0.9
+        },
+        "material": {
+            "M3": 1.0
+        },
+        "thermo": {
+            "M3": 0.9
+        },
+        "chem": {
+            "M3": 0.8
+        },
+        "boundary": {
+            "M4": 1.0
+        },
+        "bc": {
+            "M4": 0.9
+        },
+        "initial": {
+            "M4": 0.9
+        },
+        "io": {
+            "M5": 1.0
+        },
+        "input": {
+            "M5": 1.0
+        },
+        "output": {
+            "M5": 1.0
+        },
+        "post": {
+            "M5": 0.9
+        },
+        "vtk": {
+            "M5": 0.8
+        },
+        "hdf5": {
+            "M5": 0.7
+        },
+        "mpi": {
+            "M6": 1.0
+        },
+        "parallel": {
+            "M6": 1.0
+        },
+        "openmp": {
+            "M6": 0.9
+        },
+        "thread": {
+            "M6": 0.8
+        },
+        "util": {
+            "M7": 1.0
+        },
+        "utils": {
+            "M7": 1.0
+        },
+        "math": {
+            "M7": 1.0
+        },
+        "common": {
+            "M7": 0.7
+        }
+    },
+    "name_lexicon": {
+        "mesh": {
+            "M1": 1.0
+        },
+        "geom": {
+            "M1": 1.0
+        },
+        "grid": {
+            "M1": 0.8
+        },
+        "topo": {
+            "M1": 0.7
+        },
+        "solver": {
+            "M2": 1.0
+        },
+        "poisson": {
+            "M2": 0.9
+        },
+        "pressure": {
+            "M2": 1.0
+        },
+        "velo": {
+            "M2": 1.0
+        },
+        "velocity": {
+            "M2": 1.0
+        },
+        "advect": {
+            "M2": 0.9
+        },
+        "diffusion": {
+            "M2": 0.9
+        },
+        "timestep": {
+            "M2": 0.8
+        },
+        "material": {
+            "M3": 1.0
+        },
+        "property": {
+            "M3": 0.9
+        },
+        "thermo": {
+            "M3": 0.9
+        },
+        "species": {
+            "M3": 0.8
+        },
+        "reaction": {
+            "M3": 0.8
+        },
+        "density": {
+            "M3": 0.7
+        },
+        "conductivity": {
+            "M3": 0.7
+        },
+        "cp": {
+            "M3": 0.6
+        },
+        "boundary": {
+            "M4": 1.0
+        },
+        "bc": {
+            "M4": 0.9
+        },
+        "inlet": {
+            "M4": 0.9
+        },
+        "outlet": {
+            "M4": 0.9
+        },
+        "initial": {
+            "M4": 0.9
+        },
+        "init": {
+            "M4": 0.8
+        },
+        "wall": {
+            "M4": 0.8
+        },
+        "read": {
+            "M5": 1.0
+        },
+        "input": {
+            "M5": 1.0
+        },
+        "parse": {
+            "M5": 0.9
+        },
+        "output": {
+            "M5": 1.0
+        },
+        "dump": {
+            "M5": 0.8
+        },
+        "restart": {
+            "M5": 0.8
+        },
+        "post": {
+            "M5": 0.7
+        },
+        "slice": {
+            "M5": 0.7
+        },
+        "mpi": {
+            "M6": 1.0
+        },
+        "openmp": {
+            "M6": 0.9
+        },
+        "parallel": {
+            "M6": 0.9
+        },
+        "comm": {
+            "M6": 0.8
+        },
+        "halo": {
+            "M6": 0.8
+        },
+        "util": {
+            "M7": 1.0
+        },
+        "utils": {
+            "M7": 1.0
+        },
+        "math": {
+            "M7": 1.0
+        },
+        "linalg": {
+            "M7": 0.9
+        },
+        "random": {
+            "M7": 0.8
+        }
+    },
+    "api_lexicon": {
+        "mpi_": {
+            "M6": 1.0
+        },
+        "omp_": {
+            "M6": 0.8
+        },
+        "allreduce": {
+            "M6": 0.6
+        },
+        "isend": {
+            "M6": 0.5
+        },
+        "irecv": {
+            "M6": 0.5
+        },
+        "read": {
+            "M5": 0.6
+        },
+        "write": {
+            "M5": 0.6
+        },
+        "fopen": {
+            "M5": 0.5
+        },
+        "fclose": {
+            "M5": 0.5
+        },
+        "fprintf": {
+            "M5": 0.4
+        },
+        "ifstream": {
+            "M5": 0.5
+        },
+        "ofstream": {
+            "M5": 0.5
+        },
+        "namelist": {
+            "M5": 0.8
+        },
+        "rhs": {
+            "M2": 0.4
+        },
+        "lhs": {
+            "M2": 0.4
+        },
+        "cfl": {
+            "M2": 0.6
+        },
+        "dt": {
+            "M2": 0.3
+        },
+        "density": {
+            "M3": 0.5
+        },
+        "conductivity": {
+            "M3": 0.5
+        },
+        "cp": {
+            "M3": 0.4
+        }
+    }
+}
